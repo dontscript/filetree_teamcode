@@ -13,7 +13,9 @@
     // var AdmZip = require('adm-zip');
     var zipFolder = require('zip-folder');
 
-    const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
+    //const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
+    const treeRoot = "F:\\Git\\filetree_teamcode\\teamcode";
+    
     /* GET home page. */
     router.get('/', function (req, res) {
         res.render('index');

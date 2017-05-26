@@ -32,6 +32,10 @@ html, body {
     margin: 2px;
 }
 
+.active-editor{
+    background-color: #cccccc;
+}
+
 .close_tab {
     position: absolute;
     right: 5px;

@@ -213,7 +213,7 @@
                         }
                         $scope.fileViewer = _d;
                     });
-                    console.log(data.node.id);
+                    //console.log(data.node.id);
                     openEditor(data.node.id, data.node.text);
 
                 }
