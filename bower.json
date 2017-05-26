@@ -1,0 +1,32 @@
+{
+  "name": "file_explorer",
+  "description": "test",
+  "main": "index.js",
+  "authors": [
+    "DO"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "file",
+    "explorer"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "^1.6.4",
+    "angular-route": "^1.6.4",
+    "bootstrap": "^3.3.7",
+    "jsTree-directive": "jstree-directive#^0.1.5",
+    "angular-file-saver": "^1.1.3",
+    "codemirror": "^5.25.0",
+    "codemirror-formatting": "*",
+    "jquery.splitter": "^0.24.0"
+  }
+}

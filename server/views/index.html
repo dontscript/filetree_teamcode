@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="fileBrowserApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Realtime Collaboration Code</title>
+
+    <link rel="stylesheet" type="text/css" href="/libs/codemirror/lib/codemirror.css">
+    <!--<link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" type="text/css" href="/libs/jstree/dist/themes/default/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/libs/codemirror/addon/lint/lint.css">
+    <link rel="stylesheet" type="text/css" href="/libs/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" type="text/css" href="/libs/codemirror/theme/material.css">
+    <link rel="stylesheet" type="text/css" href="/libs/codemirror/theme/monokai.css">
+
+    <script src="/libs/angular/angular.min.js"></script>
+    <script src="/libs/angular-route/angular-route.min.js"></script>
+    <script src="/libs/angular-file-saver/dist/angular-file-saver.js"></script>
+    <script src="/libs/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
+
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/libs/jstree/dist/jstree.min.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+    <script src="/libs/split-pane/split-pane.js"></script>
+
+    <script src="/libs/jstree-directive/jsTree.directive.js"></script>
+
+    <script src="/js/app.js"></script>
+    <script src="/js/factory.js"></script>
+    <script src="/js/controllers.js"></script>
+
+
+</head>
+
+<body class="body">
+<h4 class="title">Admin File Browser</h4>
+<ng-view></ng-view>
+
+<!-- Live reload script -->
+<!--<script type="text/javascript" src="http://localhost:35729/livereload.js"></script>-->
+<script src="/libs/codemirror/lib/codemirror.js"></script>
+<script src="/libs/codemirror-formatting/formatting.js"></script>
+<script type="text/javascript" src="/libs/emmet/dist/emmet.js"></script>
+
+<script type="text/javascript" src="/libs/codemirror/addon/hint/show-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/hint/javascript-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/hint/html-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/hint/css-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/hint/sql-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/hint/xml-hint.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/edit/closetag.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/edit/closebrackets.js" ></script>
+<script type="text/javascript" src="/libs/codemirror/addon/selection/active-line.js" ></script>
+
+<script src="/libs/codemirror/mode/javascript/javascript.js"></script>
+<script src="/libs/codemirror/mode/xml/xml.js"></script>
+<script src="/libs/codemirror/mode/css/css.js"></script>
+<script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
+<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>
+<script src="/libs/csslintjs/csslint.js"></script>
+
+<script type="text/javascript" src="/libs/codemirror/addon/lint/lint.js"></script>
+<script type="text/javascript" src="/libs/codemirror/addon/lint/javascript-lint.js"></script>
+<script type="text/javascript" src="/libs/codemirror/addon/lint/json-lint.js"></script>
+<script type="text/javascript" src="/libs/codemirror/addon/lint/css-lint.js"></script>
+<script type="text/javascript" src="/libs/codemirror/addon/lint/html-lint.js"></script>
+
+<script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script type="text/javascript" src="/libs/codemirror_script.js"></script>
+
+</body>
+
+</html>
