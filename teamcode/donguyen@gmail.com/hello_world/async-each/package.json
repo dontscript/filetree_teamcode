@@ -1,7 +1,7 @@
 {
   "_args": [
     [
-      {dddddsda
+      {
         "raw": "async-each@^1.0.0",
         "scope": null,
         "escapedName": "async-each",

@@ -200,10 +200,9 @@ function autoFormatSelection() {
 var arr_fileURL = [];
 function openEditor(fileURL, name) {
     // var fileURL = prompt('Your file?');
-    if (isEditorActive())
-    {
-        var fileURLToClose = $('.'+ACTIVE_EDITOR).attr('id').split('_')[1];
-        $('.'+ACTIVE_EDITOR).removeClass(ACTIVE_EDITOR);
+    if (isEditorActive()) {
+        var fileURLToClose = $('.' + ACTIVE_EDITOR).attr('id').split('_')[1];
+        $('.' + ACTIVE_EDITOR).removeClass(ACTIVE_EDITOR);
         closeEditor(fileURLToClose, false);
     }
 
@@ -211,29 +210,27 @@ function openEditor(fileURL, name) {
         arr_fileURL.push(fileURL);
         if (fileURL != null) {
             if (fileURL.length != 0) {
-                if(!isEditorExist(fileURL))
-                {
-                    $('#tab_editor').append('<div class="tab_editors '+ACTIVE_EDITOR+'" id="tab_' + fileURL + '"><span class="file-name">' + name + '</span><span class="close_tab" id="' + fileURL +'">x</span></div>');
-                    $('.close_tab').on('click', function() {
-                        if ($(this).parent().hasClass(ACTIVE_EDITOR))
-                        {
+                if (!isTabExist(fileURL)) {
+                    $('#tab_editor').append('<div class="tab_editors ' + ACTIVE_EDITOR + '" id="tab_' + fileURL + '"><span class="file-name">' + name + '</span><span class="close_tab" id="' + fileURL + '">x</span></div>');
+                    $('.close_tab').on('click', function () {
+                        if ($(this).parent().hasClass(ACTIVE_EDITOR)) {
                             console.log('has class');
-                            closeEditor($(this).attr('id'),true,true);
+                            closeEditor($(this).attr('id'), true, true);
                         }
-                        else
-                        {
+                        else {
                             //console.log('no has');
                             closeEditor($(this).attr('id'));
                         }
                     });
-                    $('.tab_editors').on('click', function() {
+                    $('.tab_editors').on('click', function () {
                         //không hiểu vì sao chỗ này đặt tên tab là "last" mà tên hiện lên vẫn giữ đúng file-name
                         //same problem with line 296
-                        openEditor($(this).attr('id').split('_')[1],'last');
+                        //console.log($(this).attr('id').split('_')[1]);
+                        openEditor($(this).attr('id').split('_')[1], name);
                     });
                 }
 
-                $('div[id="tab_'+fileURL+'"]').addClass(ACTIVE_EDITOR);
+                $('div[id="tab_' + fileURL + '"]').addClass(ACTIVE_EDITOR);
 
                 $('#editors').append('<textarea class="editor" id="editor_' + fileURL + '"></textarea>');
                 setupCodeMirror(fileURL);
@@ -250,30 +247,24 @@ function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
     if (fileURL != null) {
         if (fileURL.length != 0) {
 
-            if (!(typeof myCM[fileURL] === 'undefined'))
-            {
+            if (!(typeof myCM[fileURL] === 'undefined')) {
                 myCM[fileURL].toTextArea();
                 delete myCM[fileURL];
             }
 
             $('textarea[id="editor_' + fileURL + '"]').remove();
-            if(isIncludeTab)
-            {
-                if (isActiveEditor)
-                {
+            if (isIncludeTab) {
+                if (isActiveEditor) {
                     var element = $('div[id="tab_' + fileURL + '"]').next();
-                    if(element.length)
-                    {
+                    if (element.length) {
                         element.addClass(ACTIVE_EDITOR);
-                        openLastEditor(element.attr('id').split('_')[1]);
+                        openEditor(element.attr('id').split('_')[1]);
                     }
-                    else
-                    {
+                    else {
                         element = $('div[id="tab_' + fileURL + '"]').prev();
-                        if(element.length)
-                        {
+                        if (element.length) {
                             element.addClass(ACTIVE_EDITOR);
-                            openLastEditor(element.attr('id').split('_')[1]);
+                            openEditor(element.attr('id').split('_')[1]);
                         }
                     }
                 }
@@ -283,9 +274,8 @@ function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
             if (index > -1) {
                 arr_fileURL.splice(index, 1);
             }
-            
-            if(!(typeof sockets[fileURL] === 'undefined'))
-            {
+
+            if (!(typeof sockets[fileURL] === 'undefined')) {
                 sockets[fileURL].disconnect();
                 delete sockets[fileURL];
             }
@@ -293,25 +283,14 @@ function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
     }
 }
 
-
-function openLastEditor(fileURL)
-{    
-    //không hiểu vì sao chỗ này đặt tên tab là last mà "auto được". giải thích hộ cái :|
-    //same problem with line 232
-    openEditor(fileURL,'last');
-}
-
-
-function isEditorExist(fileURL)
-{
-    if($('div[id="tab_'+fileURL+'"]').length)
+function isTabExist(fileURL) {
+    if ($('div[id="tab_' + fileURL + '"]').length)
         return true;
     return false;
 }
 
-function isEditorActive()
-{
-    if($('#tab_editor .active-editor').length)
+function isEditorActive() {
+    if ($('#tab_editor .active-editor').length)
         return true;
     return false;
 }

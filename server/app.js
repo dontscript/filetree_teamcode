@@ -34,8 +34,8 @@
         console.log('Express server listening on ' + server.address().address + ":" + server.address().port);
     });
 
-    //const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
-    const treeRoot = "F:\\Git\\filetree_teamcode\\teamcode";
+    const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
+    // const treeRoot = "F:\\Git\\filetree_teamcode\\teamcode";
     //for socketio
     var io = require('socket.io').listen(server);
 

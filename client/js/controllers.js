@@ -84,29 +84,90 @@
                     inst.refresh_node(node);
                 }
                 //download
-                tmp.download = {};
-                tmp.download.label = "Download";
-                tmp.download.action = function (data) {
+                tmp.downloadFolder = {};
+                tmp.downloadFolder.label = "Download";
+                tmp.downloadFolder.action = function (data) {
                     var inst = $.jstree.reference(data.reference),
                         node = inst.get_node(data.reference);
                     var url = node.id;
+                    var name = node.text;
                     console.log(node);
                     $http({
                         url: 'api/action?operation=download_node',
                         method: 'POST',
-                        data: {url: url},
+                        data: {url: url, name: name},
                         responseType: 'arraybuffer'
                     }).then(function (response) {
-                        console.log(response,response.headers()['content-type']);
-                        var data = new Blob([response.data], { type: response.headers()['content-type'] });
-                        FileSaver.saveAs(data, 'archive.zip');
+                        console.log(response, response.headers()['content-type']);
+                        var data = new Blob([response.data], {type: response.headers()['content-type']});
+                        FileSaver.saveAs(data, response.config.data.name + '.zip');
                     }, function (error) {
                         console.log(error);
                     });
                 }
+                tmp.downloadFile = {};
+                tmp.downloadFile.label = "Download";
+                tmp.downloadFile.action = function (data) {
+                    var inst = $.jstree.reference(data.reference),
+                        node = inst.get_node(data.reference);
+                    var url = node.id;
+                    var name = node.text;
+                    console.log(node);
+                    $http({
+                        url: 'api/action?operation=download_node',
+                        method: 'POST',
+                        data: {url: url, name: name},
+                    }).then(function (response) {
+                        console.log(response, response.headers()['content-type']);
+                        var data = new Blob([response.data], {type: response.headers()['content-type']});
+                        FileSaver.saveAs(data, response.config.data.name);
+                    }, function (error) {
+                        console.log(error);
+                    });
+                }
+                tmp.uploadFolder = {};
+                tmp.uploadFolder.label = "Upload";
+                tmp.uploadFolder.action = function (data) {
+                    var inst = $.jstree.reference(data.reference),
+                        node = inst.get_node(data.reference);
+                    var url = node.id;
+
+                    var upload = document.createElement('input');
+                    upload.style.display = 'none';
+                    upload.type = 'file';
+                    upload.name = 'file';
+                    upload.id = 'uploadFile';
+                    upload.addEventListener('change', function() {
+                        var selectedFile = upload.files[0];
+                        var fd = new FormData();
+                        fd.append('file', selectedFile);
+                        $http({
+                            url: 'api/action?operation=upload_node&url=' + url,
+                            method: 'PUT',
+                            data: fd,
+                            transformRequest: angular.identity,
+                            headers: {
+                                'Content-Type': undefined
+                            }
+                        }).then(function (response) {
+                            console.log(response);
+                            if (response.data.code == 200) {
+                                inst.refresh_node(node);
+                            }
+                        }, function (error) {
+                            console.log(error);
+                        });
+                    })
+                    upload.click();
+
+                }
                 if ($.jstree.reference(node).get_type(node) === "file") {
                     delete tmp.create;
-                    delete tmp.download;
+                    delete tmp.downloadFolder;
+                    delete tmp.uploadFolder;
+                }
+                if ($.jstree.reference(node).get_type(node) === "folder") {
+                    delete tmp.downloadFile;
                 }
                 return tmp;
             }
@@ -235,8 +296,8 @@
             function resizeWidth() {
                 var treeBrowserWidth = $('.tree-browser').width();
                 var fileViewerWidth = $('.file-viewer').width();
-                $('.split-pane-divider').mousedown(function(e) {
-                    $('.ideview').on('mousemove', function(e) {
+                $('.split-pane-divider').mousedown(function (e) {
+                    $('.ideview').on('mousemove', function (e) {
                         var diff = $('.split-pane-divider').offset().left + 1 - e.pageX;
                         $('.tree-browser').width($('.tree-browser').width() - diff);
                         $('.file-viewer').width($('.file-viewer').width() + diff);
@@ -248,7 +309,7 @@
                         }
                     });
                 });
-                $('.ideview').on('mouseup', function() {
+                $('.ideview').on('mouseup', function () {
                     $('.ideview').off('mousemove');
                 });
             }

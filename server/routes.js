@@ -8,14 +8,29 @@
     var path = require('path');
     var url = require('url');
     var sep = require('path').sep;
-    var mime = require('mime');
+    // var mime = require('mime');
     // var archiver = require('archiver');
     // var AdmZip = require('adm-zip');
     var zipFolder = require('zip-folder');
+    var multer = require('multer');
 
-    //const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
-    const treeRoot = "F:\\Git\\filetree_teamcode\\teamcode";
-    
+    const treeRoot = 'C:\\Users\\User\\Downloads\\Desktop\\file_explorer\\teamcode\\';
+    // const treeRoot = "F:\\Git\\filetree_teamcode\\teamcode";
+
+    let upload = multer({
+        storage: multer.diskStorage({
+            destination: (req, file, callback) => {
+
+                callback(null, treeRoot + decodeBase64(req.query.url));
+            },
+            filename: (req, file, callback) => {
+                //originalname is the uploaded file's name with extn
+                callback(null, file.originalname);
+            }
+        })
+    });
+
+
     /* GET home page. */
     router.get('/', function (req, res) {
         res.render('index');
@@ -68,22 +83,33 @@
         if (operation === "download_node") {
             downloadNode(decodeBase64(req.body.url), res);
         }
+
     });
+
+    router.put('/api/action', upload.any(), function (req, res) {
+        res.status(200).json({code: 200, message: "Upload Sucess"});
+    })
+
 
     function downloadNode(url, res) {
         var URL = path.join(treeRoot, url);
-        zipFolder(URL, path.resolve(__dirname, '..', 'teamcode', 'archive.zip'), function (err) {
-            if (err) {
-                console.log('oh no!', err);
-            } else {
-                res.download(path.resolve(__dirname, '..', 'teamcode', 'archive.zip'), function (err) {
-                    fs.unlink(path.resolve(__dirname, '..', 'teamcode', 'archive.zip'), function (err) {
-                        console.log(err);
+        if (fs.statSync(URL).isDirectory()) {
+            zipFolder(URL, path.resolve(__dirname, '..', 'teamcode', URL + '.zip'), function (err) {
+                if (err) {
+                    console.log('oh no!', err);
+                } else {
+                    res.download(path.resolve(__dirname, '..', 'teamcode', URL + '.zip'), function (err) {
+                        fs.unlink(path.resolve(__dirname, '..', 'teamcode', URL + '.zip'), function (err) {
+                            console.log(err);
+                        });
                     });
-                });
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            res.download(URL);
+        }
     }
 
     function encodeBase64(text) {

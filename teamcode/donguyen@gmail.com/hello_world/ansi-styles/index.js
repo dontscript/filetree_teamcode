@@ -1,6 +1,6 @@
 'use strict';
 
-function assembleStyles () {
+function assembleStyles () {dsddsdsd
 	var styles = {
 		modifiers: {
 			reset: [0, 0],
@@ -10,7 +10,7 @@ function assembleStyles () {
 			underline: [4, 24],
 			inverse: [7, 27],
 			hidden: [8, 28],
-			strikethrough: [9, 29]
+			strikethrough: [9, 29]d
 		},
 		colors: {
 			black: [30, 39],
