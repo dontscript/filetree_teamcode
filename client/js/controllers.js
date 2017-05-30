@@ -137,7 +137,7 @@
                     upload.type = 'file';
                     upload.name = 'file';
                     upload.id = 'uploadFile';
-                    upload.addEventListener('change', function() {
+                    upload.addEventListener('change', function () {
                         var selectedFile = upload.files[0];
                         var fd = new FormData();
                         fd.append('file', selectedFile);
@@ -299,14 +299,17 @@
                 $('.split-pane-divider').mousedown(function (e) {
                     $('.ideview').on('mousemove', function (e) {
                         var diff = $('.split-pane-divider').offset().left + 1 - e.pageX;
+
+                        if ($('.tree-browser').width() <= 0) {
+                            $('.ideview').off('mousemove');
+                        }
                         $('.tree-browser').width($('.tree-browser').width() - diff);
                         $('.file-viewer').width($('.file-viewer').width() + diff);
 
                         $('#file-explorer').width($('#file-explorer').width() - diff);
                         $('#tab_editor').width($('#tab_editor').width() + diff);
-                        if ($('.tree-browser').width() <= 100) {
-                            $('.ideview').off('mousemove');
-                        }
+
+
                     });
                 });
                 $('.ideview').on('mouseup', function () {

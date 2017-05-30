@@ -75,23 +75,128 @@ function setupSocket(fileURL) {
     });
 }
 
+CodeMirror.modeURL = "/libs/codemirror/mode/%N/%N.js";
+function change(modeValue, codeMirrorValue) {
+    // console.log(modeValue);
+    var val = modeValue, m, mode, spec;
+    if (m = /.+\.([^.]+)$/.exec(val)) {
+        var info = CodeMirror.findModeByExtension(m[1]);
+        if (info) {
+            mode = info.mode;
+            spec = info.mime;
+        }
+    } else if (/\//.test(val)) {
+        var info = CodeMirror.findModeByMIME(val);
+        if (info) {
+            mode = info.mode;
+            spec = val;
+        }
+    } else {
+        mode = spec = val;
+    }
+    if (mode) {
+        codeMirrorValue.setOption("mode", spec);
+        CodeMirror.autoLoadMode(codeMirrorValue, mode);
+        // document.getElementById("modeinfo").textContent = spec;
+    }
+    else {
+        console.log("Could not find a mode corresponding to " + val);
+    }
+}
+
+function getURL(url, c) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState != 4) return;
+        if (xhr.status < 400) return c(null, xhr.responseText);
+        var e = new Error(xhr.responseText || "No response");
+        e.status = xhr.status;
+        c(e);
+    };
+}
+
+
 function setupCodeMirror(fileURL) {
     myCM[fileURL] = CodeMirror.fromTextArea(document.getElementById("editor_" + fileURL),
         {
             lineNumbers: true,
             lineWrapping: true,
-            extraKeys: {"Ctrl-Space": "autocomplete"},
-            mode: {name: "text/html", globalVars: true},
+            extraKeys: {"Ctrl-Space": "autocomplete", "Ctrl-F": "findPersistent", "Ctrl-J": "toMatchingTag"},
+            // mode: {name: "text/html", globalVars: true},
+            mode: 'text/plain',
+            selectionPointer: true,
             autoCloseTags: true,
             autoCloseBrackets: true,
             styleActiveLine: true,
             tabSize: 2,
             gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "breakpoints"],
             lint: true,
-            theme: theme,
-            profile: 'xhtml'
+            // theme: theme,
+            scrollbarStyle: "simple",
+            profile: 'xhtml',
+            matchTags: {bothTags: true},
+            matchBrackets: true
         });
     emmetCodeMirror(myCM[fileURL]);
+
+    var server;
+    getURL("//ternjs.net/defs/ecmascript.json", function (err, code) {
+        if (err) throw new Error("Request for ecmascript.json: " + err);
+        server = new CodeMirror.TernServer({defs: [JSON.parse(code)]});
+        myCM[fileURL].setOption("extraKeys", {
+            "Ctrl-Space": function (cm) {
+                server.complete(cm);
+            },
+            "Ctrl-I": function (cm) {
+                server.showType(cm);
+            },
+            "Ctrl-O": function (cm) {
+                server.showDocs(cm);
+            },
+            "Alt-.": function (cm) {
+                server.jumpToDef(cm);
+            },
+            "Alt-,": function (cm) {
+                server.jumpBack(cm);
+            },
+            "Ctrl-Q": function (cm) {
+                server.rename(cm);
+            },
+            "Ctrl-.": function (cm) {
+                server.selectName(cm);
+            }
+        })
+        myCM[fileURL].on("cursorActivity", function (cm) {
+            server.updateArgHints(cm);
+        });
+        var timeout;
+        myCM[fileURL].on("keyup", function (cm, event) {
+            var popupKeyCodes = {
+                "9": "tab",
+                "13": "enter",
+                "27": "escape",
+                "33": "pageup",
+                "34": "pagedown",
+                "35": "end",
+                "36": "home",
+                "38": "up",
+                "40": "down"
+            }
+            ph
+            if (!popupKeyCodes[(event.keyCode || event.which).toString()] && !myCM[fileURL].state.completionActive) {
+                // if (timeout) clearTimeout(timeout);
+                // timeout = setTimeout(function () {
+                //     // console.log('showing hint');
+                //     // CodeMirror.showHint(cm, CodeMirror.hint.javascript, {completeSingle: false});
+                //     server.complete(cm)
+                // }, 150);
+                // console.log(server);
+                // server.complete(cm);
+            }
+        });
+    });
 
     myCM[fileURL].on("gutterClick", function (cm, n) {
         var info = cm.lineInfo(n);
@@ -197,6 +302,21 @@ function autoFormatSelection() {
     var range = getSelectedRange();
     myCM[fileURL].autoFormatRange(range.from, range.to);
 }
+
+function filterNameTab(name) {
+    if (name.length > 8) {
+        return name.substr(0, 8) + '...';
+    }
+    return name;
+}
+
+function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
 var arr_fileURL = [];
 function openEditor(fileURL, name) {
     // var fileURL = prompt('Your file?');
@@ -211,10 +331,18 @@ function openEditor(fileURL, name) {
         if (fileURL != null) {
             if (fileURL.length != 0) {
                 if (!isTabExist(fileURL)) {
-                    $('#tab_editor').append('<div class="tab_editors ' + ACTIVE_EDITOR + '" id="tab_' + fileURL + '"><span class="file-name">' + name + '</span><span class="close_tab" id="' + fileURL + '">x</span></div>');
-                    $('.close_tab').on('click', function () {
+                    // var tempElement = document.createElement('div');
+                    // tabEditorElement.className = 'tab_editors ' + ACTIVE_EDITOR;
+                    // tabEditorElement.id = 'tab_' + fileURL;
+                    // tabEditorElement.title = b64DecodeUnicode(fileURL);
+
+                    $('#tab_editor').append('<div class="tab_editors ' + ACTIVE_EDITOR + '" id="tab_' + fileURL + '" title="' + b64DecodeUnicode(fileURL) + '"><span class="file-name">' + filterNameTab(name) + '</span><span class="close_tab" id="' + fileURL + '">x</span></div>');
+
+                    var editorCloseId = `span[id='${fileURL}']`;
+                    $(editorCloseId).on('click', function () {
+                        // console.log($(this).attr('id'));
                         if ($(this).parent().hasClass(ACTIVE_EDITOR)) {
-                            console.log('has class');
+                            //console.log('has class');
                             closeEditor($(this).attr('id'), true, true);
                         }
                         else {
@@ -222,10 +350,13 @@ function openEditor(fileURL, name) {
                             closeEditor($(this).attr('id'));
                         }
                     });
-                    $('.tab_editors').on('click', function () {
+                    // var testID = '#tab_' + fileURL;
+                    // console.log(typeof testID);
+                    var tabEditorId = `div[id='tab_${fileURL}']`;
+                    $(tabEditorId).on('click', function () {
                         //không hiểu vì sao chỗ này đặt tên tab là "last" mà tên hiện lên vẫn giữ đúng file-name
                         //same problem with line 296
-                        //console.log($(this).attr('id').split('_')[1]);
+                        console.log($(this).attr('id').split('_')[1]);
                         openEditor($(this).attr('id').split('_')[1], name);
                     });
                 }
@@ -234,12 +365,14 @@ function openEditor(fileURL, name) {
 
                 $('#editors').append('<textarea class="editor" id="editor_' + fileURL + '"></textarea>');
                 setupCodeMirror(fileURL);
+                change(name, myCM[fileURL]);
                 setupSocket(fileURL);
                 sockets[fileURL].emit('getFileContent', fileURL);
             }
         }
     }
 }
+
 
 function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
     // var fileURL = prompt('Your file?');

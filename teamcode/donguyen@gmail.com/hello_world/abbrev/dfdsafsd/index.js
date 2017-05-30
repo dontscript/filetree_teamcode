@@ -1,4 +1,4 @@
-const host = 'teamcode.me';
+const host = 'teamcode.me'
 
 //setting environment variables
 var helperModule = require('./lib/TeamCodeHelper.js');
@@ -15,6 +15,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var md5 = require('md5');
+
 
 //custom mysql with user
 var mysqldb = require ('./lib/mysqldb.js');
@@ -40,7 +41,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 app.post('/authen', function(req,res){
 	
 	mysql.findTokenByValue(req.body.token,function(err,token){
-		if (err===false){
+		if (err==false){
 
 			var tempToken = new Token();
 			tempToken.initial(token);

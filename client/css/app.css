@@ -23,23 +23,45 @@ html, body {
 .tab_editors {
     height: 30px;
     width: 100px;
-    border: 1px solid #000;
-    border-bottom-color: transparent;
+    border: 1px solid silver;
+    border-bottom: none;
     display: inline-block;
     text-align: center;
     line-height: 30px;
     position: relative;
     margin: 2px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    background: #f3f3f3;
+    color: #777
 }
 
-.active-editor{
-    background-color: #cccccc;
+.ideview .row .col {
+    padding: 0 !important;
+}
+
+.ideview .row  {
+    margin-bottom: 0;
+}
+
+.active-editor {
+    background-color: white;
+    color: black;
 }
 
 .close_tab {
     position: absolute;
     right: 5px;
     cursor: pointer;
+    font-size: 12px;
+    top: -5px;
+    transition: all .5s;
+}
+
+.close_tab:hover {
+    color: red;
+    transition: all .5s;
 }
 
 .split-pane-divider {
@@ -55,17 +77,18 @@ html, body {
 }
 
 /*.editor {*/
-    /*height: 500px;*/
+/*height: 500px;*/
 /*}*/
 
 .CodeMirror {
     height: 800px;
-
+    border: 1px solid silver;
 }
 
 .ideview {
     width: 100%;
 }
+
 .tree-browser {
     width: 20%;
     display: inline-block;
