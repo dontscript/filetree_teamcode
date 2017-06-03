@@ -130,7 +130,7 @@
     function moveNode(id, parent, text, res) {
         fse.move(path.join(treeRoot, id), path.join(treeRoot, parent, text), function (err) {
             if (err) throw err;
-            res.status(200).send('OK!');
+            res.send({id: encodeBase64(path.join(parent, text))});
         })
     }
 

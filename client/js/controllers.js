@@ -199,6 +199,8 @@
                         method: 'POST',
                         data: {id: data.node.id, text: data.text, parent: data.node.parent}
                     }).then(function (response) {
+                        updateRenameTabs(data.node.id, response.data.id, data.text);
+
                         data.instance.set_id(data.node, response.data.id);
                         data.node.li_attr.base = response.data.id;
                         data.instance.refresh_node(data.node);
@@ -206,6 +208,7 @@
                         console.log(error);
                         data.instance.refresh_node(data.node);
                     });
+                    // console.log("new" data);
                 }
             }
 
@@ -231,6 +234,8 @@
                     data: {id: data.node.id, parent: data.parent, text: data.node.text}
                 }).then(function (response) {
                     // data.instance.refresh_node(data.parent)
+                    // console.log(response);
+                    updateMoveTabs(data.node.id, response.data.id);
                     data.instance.load_node(data.parent);
                 }, function (err) {
                     data.instance.refresh();
@@ -244,7 +249,7 @@
                     method: 'POST',
                     data: {id: data.node.id}
                 }).then(function (response) {
-
+                    updateDeleteTabs(data.node.id);
                 }, function (err) {
                     data.instance.refresh_node(data.node);
                 });

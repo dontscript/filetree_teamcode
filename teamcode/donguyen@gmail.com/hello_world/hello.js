@@ -1,9 +1,7 @@
 var x = 10;
-
-function sum(a,b) { 
-   return a + b;
- }
-
+function sum(a,b) {
+  return a + b;
+}
 /**
  * Adds two numbers
  * @param {String} x 
@@ -19,5 +17,6 @@ var m = /.+\.([^.]+)$/.exec(val);
 bar
 hello
 hello
-ddddh
+ddddhgfgggg
 hasOwnProperty
+hello()

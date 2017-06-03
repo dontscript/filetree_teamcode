@@ -166,10 +166,27 @@ function setupCodeMirror(fileURL) {
             },
             "Ctrl-.": function (cm) {
                 server.selectName(cm);
+            },
+            "Ctrl-Alt-L": function (cm) {
+                // autoFormatSelection(myCM[fileURL]);
+                console.log({line:0, ch:0}, {line: cm.lineCount()});
+                cm.autoFormatRange({line:0, ch:0}, {line: cm.lineCount()});
             }
         })
         myCM[fileURL].on("cursorActivity", function (cm) {
+            // if (timeoutCur) {
+            //     clearTimeout(timeoutCur);
+            // }
+            // var timeoutCur = setTimeout(() => {
+            //     server.updateArgHints(cm);
+            // }, 2000);
             server.updateArgHints(cm);
+            // server.updateArgHints(cm);
+            // server.getHint(cm, (c) => {
+            //     console.log(c);
+            // });
+            // console.log(server.updateArgHints(cm));
+            // console.log(myCM[fileURL].firstLine());
         });
         var timeout;
         myCM[fileURL].on("keyup", function (cm, event) {
@@ -184,7 +201,7 @@ function setupCodeMirror(fileURL) {
                 "38": "up",
                 "40": "down"
             }
-            ph
+
             if (!popupKeyCodes[(event.keyCode || event.which).toString()] && !myCM[fileURL].state.completionActive) {
                 // if (timeout) clearTimeout(timeout);
                 // timeout = setTimeout(function () {
@@ -293,14 +310,73 @@ function HandleDocumentComing(data) {
 
     }
 }
-
-function getSelectedRange(fileURL) {
-    return {from: myCM[fileURL].getCursor(true), to: myCM[fileURL].getCursor(false)};
+var arr_oldFileURL = [];
+function updateRenameTabs(idOld, idNew, name) {
+    console.log(idOld, idNew, name);
+    let element = document.getElementById('tab_' + idOld);
+    if (element != null)  {
+        arr_oldFileURL.push(idOld);
+        if (idOld === idNew) {
+            element.childNodes[0].textContent = filterNameTab(name);
+        }
+        else {
+            element.id = 'tab_' + idNew;
+            element.title = b64DecodeUnicode(idNew);
+            element.childNodes[0].textContent = filterNameTab(name);
+            element.childNodes[1].id = idNew;
+        }
+        deleteAllOldEditor();
+        openEditor(idNew, name);
+    }
+    // console.log(element.childNodes);
 }
 
-function autoFormatSelection() {
-    var range = getSelectedRange();
-    myCM[fileURL].autoFormatRange(range.from, range.to);
+function updateDeleteTabs(id) {
+    let element = document.getElementById('tab_' + id);
+    if (/\bactive-editor\b/.test(element.className)) {
+        closeEditor(id, true, true);
+    }
+    else {
+        closeEditor(id);
+    }
+}
+
+function updateMoveTabs(idOld, idNew) {
+    let element = document.getElementById('tab_' + idOld);
+    if (element != null) {
+        arr_oldFileURL.push(idOld);
+        if (idOld !== idNew) {
+            element.id = 'tab_' + idNew;
+            element.title = b64DecodeUnicode(idNew);
+            element.childNodes[1].id = idNew;
+        }
+        deleteAllOldEditor();
+        openEditor(idNew, element.getAttribute('name'));
+    }
+}
+
+function deleteAllOldEditor() {
+    if (arr_oldFileURL.length != 0) {
+        for (let oldFileURL of arr_oldFileURL) {
+            myCM[oldFileURL].toTextArea();
+            delete myCM[oldFileURL];
+            $('textarea[id="editor_' + oldFileURL + '"]').remove();
+
+            let index = arr_oldFileURL.indexOf(oldFileURL);
+            if (index > -1) {
+                arr_oldFileURL.splice(index, 1);
+            }
+        }
+    }
+}
+
+function getSelectedRange(cm) {
+    return {from: cm.firstLine(), to: cm.lineCount()};
+}
+
+function autoFormatSelection(cm) {
+    var range = getSelectedRange(cm);
+    cm.autoFormatRange(range.from, range.to);
 }
 
 function filterNameTab(name) {
@@ -336,7 +412,7 @@ function openEditor(fileURL, name) {
                     // tabEditorElement.id = 'tab_' + fileURL;
                     // tabEditorElement.title = b64DecodeUnicode(fileURL);
 
-                    $('#tab_editor').append('<div class="tab_editors ' + ACTIVE_EDITOR + '" id="tab_' + fileURL + '" title="' + b64DecodeUnicode(fileURL) + '"><span class="file-name">' + filterNameTab(name) + '</span><span class="close_tab" id="' + fileURL + '">x</span></div>');
+                    $('#tab_editor').append('<div class="tab_editors ' + ACTIVE_EDITOR + '" id="tab_' + fileURL + '" title="' + b64DecodeUnicode(fileURL) + '" name="' + name + '"><span class="file-name">' + filterNameTab(name) + '</span><span class="close_tab" id="' + fileURL + '">x</span></div>');
 
                     var editorCloseId = `span[id='${fileURL}']`;
                     $(editorCloseId).on('click', function () {
@@ -376,7 +452,7 @@ function openEditor(fileURL, name) {
 
 function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
     // var fileURL = prompt('Your file?');
-    //console.log(fileURL);
+    console.log(myCM);
     if (fileURL != null) {
         if (fileURL.length != 0) {
 
@@ -391,13 +467,13 @@ function closeEditor(fileURL, isIncludeTab = true, isActiveEditor = false) {
                     var element = $('div[id="tab_' + fileURL + '"]').next();
                     if (element.length) {
                         element.addClass(ACTIVE_EDITOR);
-                        openEditor(element.attr('id').split('_')[1]);
+                        openEditor(element.attr('id').split('_')[1], element.attr('name'));
                     }
                     else {
                         element = $('div[id="tab_' + fileURL + '"]').prev();
                         if (element.length) {
                             element.addClass(ACTIVE_EDITOR);
-                            openEditor(element.attr('id').split('_')[1]);
+                            openEditor(element.attr('id').split('_')[1], element.attr('name'));
                         }
                     }
                 }

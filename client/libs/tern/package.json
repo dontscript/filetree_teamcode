@@ -1,0 +1,412 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "tern",
+        "scope": null,
+        "escapedName": "tern",
+        "name": "tern",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\User\\Downloads\\Desktop\\file_explorer"
+    ]
+  ],
+  "_from": "tern@latest",
+  "_id": "tern@0.21.0",
+  "_inCache": true,
+  "_location": "/tern",
+  "_nodeVersion": "6.9.1",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/tern-0.21.0.tgz_1487453735920_0.7096948034595698"
+  },
+  "_npmUser": {
+    "name": "marijn",
+    "email": "marijnh@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {
+    "brace-expansion": "1.1.7",
+    "fs.realpath": "1.0.0",
+    "inflight": "1.0.6",
+    "inherits": "2.0.3",
+    "once": "1.3.3",
+    "path-is-absolute": "1.0.1"
+  },
+  "_requested": {
+    "raw": "tern",
+    "scope": null,
+    "escapedName": "tern",
+    "name": "tern",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/tern/-/tern-0.21.0.tgz",
+  "_shasum": "809c87a826e112494398cf8894f7c2d1b3464eb7",
+  "_shrinkwrap": null,
+  "_spec": "tern",
+  "_where": "C:\\Users\\User\\Downloads\\Desktop\\file_explorer",
+  "author": {
+    "name": "Marijn Haverbeke",
+    "email": "marijnh@gmail.com"
+  },
+  "bin": {
+    "tern": "./bin/tern"
+  },
+  "blint": {
+    "allowedGlobals": [
+      "tern",
+      "acorn",
+      "define",
+      "clearTimeout",
+      "setTimeout",
+      "__dirname",
+      "global",
+      "process"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/ternjs/tern/issues"
+  },
+  "contributors": [
+    {
+      "name": "List of Tern contributors. Updated before every release."
+    },
+    {
+      "name": "A2ZH"
+    },
+    {
+      "name": "Adam Faulkner"
+    },
+    {
+      "name": "Adrian Toncean"
+    },
+    {
+      "name": "Albertina Durante"
+    },
+    {
+      "name": "Alex Pinder"
+    },
+    {
+      "name": "Alex Saveliev"
+    },
+    {
+      "name": "Amila Welihinda"
+    },
+    {
+      "name": "Anders Thøgersen"
+    },
+    {
+      "name": "angelozerr"
+    },
+    {
+      "name": "Antonina Cherednichenko"
+    },
+    {
+      "name": "Ben Joldersma"
+    },
+    {
+      "name": "Ben McCormick"
+    },
+    {
+      "name": "Boris Jonica"
+    },
+    {
+      "name": "Brian Frichette"
+    },
+    {
+      "name": "CentricStorm"
+    },
+    {
+      "name": "chemzqm"
+    },
+    {
+      "name": "Claus Reinke"
+    },
+    {
+      "name": "Connor Osborn"
+    },
+    {
+      "name": "Curtis Windatt"
+    },
+    {
+      "name": "Damien Diederen"
+    },
+    {
+      "name": "Dani Hodovic"
+    },
+    {
+      "name": "Danny Su"
+    },
+    {
+      "name": "Dewdrops"
+    },
+    {
+      "name": "dloverin"
+    },
+    {
+      "name": "Dmitry Gutov"
+    },
+    {
+      "name": "Eloy Toro"
+    },
+    {
+      "name": "Erik Tierney"
+    },
+    {
+      "name": "Fabian Zeindl"
+    },
+    {
+      "name": "Forbes Lindesay"
+    },
+    {
+      "name": "Francisc Romano"
+    },
+    {
+      "name": "Francis Murillo"
+    },
+    {
+      "name": "Hans Huebner"
+    },
+    {
+      "name": "Hiroaki Otsu"
+    },
+    {
+      "name": "Iku Iwasa"
+    },
+    {
+      "name": "impinball"
+    },
+    {
+      "name": "i-p"
+    },
+    {
+      "name": "Jackson Ray Hamilton"
+    },
+    {
+      "name": "J David Smith"
+    },
+    {
+      "name": "Jeffrey Fisher"
+    },
+    {
+      "name": "Jonathan Persson"
+    },
+    {
+      "name": "Josh Giles"
+    },
+    {
+      "name": "jzhang"
+    },
+    {
+      "name": "katspaugh"
+    },
+    {
+      "name": "Kim Se-won"
+    },
+    {
+      "name": "Kyle P Davis"
+    },
+    {
+      "name": "Marcel Gerber"
+    },
+    {
+      "name": "Marcello Bastea-Forte"
+    },
+    {
+      "name": "Marijn Haverbeke"
+    },
+    {
+      "name": "Matt"
+    },
+    {
+      "name": "Matthias Dahl"
+    },
+    {
+      "name": "MetaMemoryT"
+    },
+    {
+      "name": "Michael Russell"
+    },
+    {
+      "name": "Michał Grzejszczak"
+    },
+    {
+      "name": "Miguel Castillo"
+    },
+    {
+      "name": "Mihai Bazon"
+    },
+    {
+      "name": "Mike Rennie"
+    },
+    {
+      "name": "Mikko Rantanen"
+    },
+    {
+      "name": "Miroslav Bajtoš"
+    },
+    {
+      "name": "Mounir Lamouri"
+    },
+    {
+      "name": "Nate Eagleson"
+    },
+    {
+      "name": "Nick Malaguti"
+    },
+    {
+      "name": "Nicolas Petton"
+    },
+    {
+      "name": "Nico Weber"
+    },
+    {
+      "name": "Olivier Ligot"
+    },
+    {
+      "name": "Ossi Herrala"
+    },
+    {
+      "name": "othree"
+    },
+    {
+      "name": "Paris Kasidiaris"
+    },
+    {
+      "name": "Paul Bakker"
+    },
+    {
+      "name": "Paul Verest"
+    },
+    {
+      "name": "Peter Elmers"
+    },
+    {
+      "name": "Peter Farland"
+    },
+    {
+      "name": "Piotr Tomiak"
+    },
+    {
+      "name": "Quinn Slack"
+    },
+    {
+      "name": "Ralf Kistner"
+    },
+    {
+      "name": "Randy Edmunds"
+    },
+    {
+      "name": "Renato F"
+    },
+    {
+      "name": "Renato Ferreira"
+    },
+    {
+      "name": "Reuben Thomas"
+    },
+    {
+      "name": "Ryan Stewart"
+    },
+    {
+      "name": "SAKURAI Masashi"
+    },
+    {
+      "name": "Sean Usick"
+    },
+    {
+      "name": "Sergey Chikuyonok"
+    },
+    {
+      "name": "Sérgio Ramos"
+    },
+    {
+      "name": "sevin7676"
+    },
+    {
+      "name": "Se-Won Kim"
+    },
+    {
+      "name": "Sindre Sorhus"
+    },
+    {
+      "name": "Slava Kim"
+    },
+    {
+      "name": "Stephan Seidt"
+    },
+    {
+      "name": "Steve Purcell"
+    },
+    {
+      "name": "stoskov"
+    },
+    {
+      "name": "Tim M. Madsen"
+    },
+    {
+      "name": "Timothy Gu"
+    },
+    {
+      "name": "Tommy Troy Lin"
+    },
+    {
+      "name": "Trey Thomas"
+    },
+    {
+      "name": "vheon"
+    },
+    {
+      "name": "Vincent Woo"
+    },
+    {
+      "name": "xd1le"
+    }
+  ],
+  "dependencies": {
+    "acorn": "^4.0.9",
+    "enhanced-resolve": "^2.2.2",
+    "glob": "^7.1.1",
+    "minimatch": "^3.0.3",
+    "resolve-from": "2.0.0"
+  },
+  "description": "A JavaScript code analyzer for deep, cross-editor language support",
+  "devDependencies": {
+    "codemirror": "git://github.com/codemirror/CodeMirror.git"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "809c87a826e112494398cf8894f7c2d1b3464eb7",
+    "tarball": "https://registry.npmjs.org/tern/-/tern-0.21.0.tgz"
+  },
+  "gitHead": "e6a7777f273050098fa7074577ac196bae59d80b",
+  "homepage": "https://github.com/ternjs/tern#readme",
+  "license": "MIT",
+  "main": "lib/tern.js",
+  "maintainers": [
+    {
+      "name": "marijn",
+      "email": "marijnh@gmail.com"
+    }
+  ],
+  "name": "tern",
+  "optionalDependencies": {},
+  "readme": "# Tern\n\n[![Build Status](https://secure.travis-ci.org/ternjs/tern.svg)](http://travis-ci.org/ternjs/tern)\n[![NPM version](https://img.shields.io/npm/v/tern.svg)](https://www.npmjs.org/package/tern)  \n[Funding status: ![maintainer happiness](https://marijnhaverbeke.nl/fund/status_s.png?again)](https://marijnhaverbeke.nl/fund/)\n\nThis is [Tern][1]. Tern is a stand-alone, editor-independent\nJavaScript analyzer that can be used to improve the JavaScript\nintegration of existing editors.\n\nThanks to a group of generous [crowd funders][2], Tern is open-source\nsoftware, under an MIT license.\n\nThere are currently plugins available for [Emacs][emacs] (and Emacs\n[company-mode][cmode]), [Vim][vim], [Sublime Text][st], [Eclipse (and general Java API)][ec],\n[Light Table][lt], [Atom][atom], [TextMate][tm] and [gedit][gedit], and built-in support in\n[Brackets][brackets], [Edge Code][edge_code], [CodeLite](http://codelite.org/),\n[vy](https://github.com/iogf/vy), and [SourceLair][sourcelair].\n\nFor further documentation, see the [project page][1] and the\n[manual][3]. To report issues, use the\n[issue tracker](https://github.com/ternjs/tern/issues). For questions\nand documentation, see the\n[discussion forum](https://discuss.ternjs.net).\n\n[1]: http://ternjs.net\n[2]: http://www.indiegogo.com/projects/tern-intelligent-javascript-editing\n[3]: http://ternjs.net/doc/manual.html\n\n[emacs]: http://ternjs.net/doc/manual.html#emacs\n[ec]: https://github.com/angelozerr/tern.java\n[vim]: https://github.com/ternjs/tern_for_vim\n[st]: https://github.com/ternjs/tern_for_sublime\n[lt]: https://github.com/mortalapeman/LT-TernJS\n[atom]: https://atom.io/packages/atom-ternjs\n[gedit]: https://github.com/Swatinem/tern_for_gedit\n[brackets]: http://brackets.io\n[edge_code]: http://html.adobe.com/edge/code\n[cmode]: https://github.com/proofit404/company-tern\n[tm]: https://github.com/fab1an/JavaScript-Tern-Completion.tmbundle\n[sourcelair]: https://www.sourcelair.com\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ternjs/tern.git"
+  },
+  "scripts": {
+    "test": "node ./bin/test"
+  },
+  "version": "0.21.0"
+}
